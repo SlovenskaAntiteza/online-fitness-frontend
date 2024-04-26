@@ -1,0 +1,188 @@
+<div class="flex justify-content-center align-items-center h-full">
+  <div class="form-container">
+    <form [formGroup]="registerForm" (ngSubmit)="submitDetails()">
+      <!-- background color need change-->
+      <p-card header="Register" [style]="{ width: '600px' }">
+        <div class="flex justify-content-around">
+          <div class="field">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="firstName"
+              name="firstName"
+              id="firstName"
+              placeholder="Type your first name"
+            />
+            <small
+              *ngIf="
+                firstName.invalid && (firstName.dirty || firstName.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="firstName.errors?.['required']">
+                First name is required
+              </div>
+            </small>
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="lastName"
+              name="lastName"
+              id="lastName"
+              placeholder="Type your last name"
+            />
+            <small
+              *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="lastName.errors?.['required']">
+                Last name is required
+              </div>
+            </small>
+          </div>
+        </div>
+        <div class="flex-column">
+          <div class="field">
+            <div><label for="mail">Email</label></div>
+            <div>
+              <input
+                type="text"
+                pInputText
+                formControlName="mail"
+                name="mail"
+                id="mail"
+                placeholder="Type your email"
+              />
+            </div>
+            <small
+              *ngIf="mail.invalid && (mail.dirty || mail.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="mail.errors?.['required']">Email is required</div>
+              <div *ngIf="mail.errors?.['email']">Email should be valid</div>
+            </small>
+          </div>
+        </div>
+        <div class="flex justify-content-around">
+          <div class="field">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              pInputText
+              formControlName="password"
+              name="password"
+              id="password"
+              placeholder="Type your password"
+            />
+            <small
+              *ngIf="password.invalid && (password.dirty || password.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="password.errors?.['required']">
+                Password is required
+              </div>
+            </small>
+          </div>
+          <div class="field">
+            <label for="confirmPassword">Confirm password</label>
+            <input
+              type="password"
+              pInputText
+              formControlName="confirmPassword"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="Confirm your password"
+            />
+            <small
+              *ngIf="
+                confirmPassword.invalid &&
+                (confirmPassword.dirty || confirmPassword.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="confirmPassword.errors?.['required']">
+                Confirmatiom is required
+              </div>
+            </small>
+
+            <small
+              class="block p-error"
+              *ngIf="registerForm.errors?.['passwordMatch'] && password.valid && confirmPassword.valid"
+            >
+              Password should match
+            </small>
+          </div>
+        </div>
+        <div class="flex justify-content-around">
+          <div class="field">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="username"
+              name="username"
+              id="username"
+              placeholder="Type your username"
+            />
+            <small
+              *ngIf="username.invalid && (username.dirty || username.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="username.errors?.['required']">
+                Username is required
+              </div>
+            </small>
+          </div>
+          <div class="field">
+            <label for="city">City</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="city"
+              name="city"
+              id="city"
+              placeholder="Type your city"
+            />
+            <small
+              *ngIf="city.invalid && (city.dirty || city.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="city.errors?.['required']">City is required</div>
+            </small>
+          </div>
+        </div>
+        <div class="flex-column">
+          <div class="field">
+            <div><label for="avatarUrl">Avatar</label></div>
+            <div>
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                (change)="onFileChange($event)"
+                pInputText
+                formControlName="avatarUrl"
+                name="avatarUrl"
+                style="width: 527px"
+                id="avatarUrl"
+                placeholder="Enter avatar"
+              />
+            </div>
+          </div>
+        </div>
+        <p-button
+          label="REGISTER"
+          styleClass="w-full"
+          [disabled]="registerForm.invalid"
+          type="ngSubmit"
+        ></p-button>
+        <div class="mt-2">
+          Already a memeber? <a routerLink="/login">Login</a>
+        </div>
+      </p-card>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="flex justify-content-center mt-3 text-teal-500 text-5xl font-bold">
+  Chat
+</div>
+
+<div class="flex justify-content-end mr-4 mb-3">
+  <button id="newProgramBtn" (click)="sendMessage()">
+    <i class="pi pi-plus"></i> New message
+  </button>
+</div>
+
+<div class="flex-column">
+  <div
+    class="flex justify-content-center"
+    *ngFor="let message of messages.content"
+  >
+    <div class="message-card">
+      <div class="flex">
+        <div class="user-avatar">
+          @if(message?.sender?.id === userId){ @if (message?.receiver?.avatarUrl
+          === ""){
+          <img src="assets/avatar.png" alt="" />
+          } @else {
+          <img
+            [src]="
+              'http://localhost:8080/api/images/get-avatar?name=' +
+              message?.receiver?.avatarUrl
+            "
+            alt=""
+          />
+          } } @else { @if (message?.sender?.avatarUrl === ""){
+          <img src="assets/avatar.png" alt="" />
+          } @else {
+          <img
+            [src]="
+              'http://localhost:8080/api/images/get-avatar?name=' +
+              message?.sender?.avatarUrl
+            "
+            alt=""
+          />
+          } }
+        </div>
+        <div class="user-info">
+          <span>
+            @if (message.sender.id === userId){
+            {{ message.receiver.firstName + " " + message.receiver.lastName }}
+            (to) } @else {
+            {{ message.sender.firstName + " " + message.sender.lastName }}
+            (from)}
+          </span>
+          <div class="text-color-secondary" style="font-weight: normal">
+            {{ calculateDays(message.date) }} days ago
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-2 text-color-secondary" style="font-weight: bold">
+        {{ message.message }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex-column"></div>
+
+<div
+  style="
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+  "
+>
+  <p-paginator
+    [totalRecords]="numOfRecords"
+    [rows]="pageSize"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
+</div>
+
+<app-create-message
+  [isViewable]="showSendMessageModal"
+  (modalClosed)="onSendMessageModalClosed($event)"
+  [userId]="userId"
+></app-create-message>
+
+<p-toast></p-toast>

@@ -1,0 +1,31 @@
+<div class="flex justify-content-center mt-3 text-teal-500 text-5xl font-bold">
+  Subscriptions
+</div>
+
+<div class="flex-column">
+  <div class="flex justify-content-center" *ngFor="let cat of categories">
+    <div class="subscription-card">
+      <h3 class="text-black-alpha-90">{{ cat.category }}</h3>
+      <div>
+        @if (!cat.subscribed){
+        <button
+          class="subscription-btn text-black-alpha-90"
+          style="background-color: rgb(50, 253, 50)"
+          (click)="subscribe(cat)"
+        >
+          subscribe
+        </button>
+        }@else {
+
+        <button
+          class="subscription-btn text-black-alpha-90"
+          style="background-color: rgb(255, 53, 53)"
+          (click)="unsubscribe(cat)"
+        >
+          unsubscribe
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

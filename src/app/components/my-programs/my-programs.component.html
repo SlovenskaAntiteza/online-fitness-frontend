@@ -1,0 +1,115 @@
+<div class="flex-column m-3">
+  <div class="flex justify-content-center">
+    <h3>My programs</h3>
+  </div>
+  <div class="flex justify-content-end mr-2 mb-3">
+    <button id="newProgramBtn" routerLink="/new-fitness-program">
+      <i class="pi pi-plus"></i> New program
+    </button>
+  </div>
+
+  <div class="flex w-full">
+    <nav style="width: 100%">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button
+          class="nav-link active"
+          id="nav-home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#created"
+          type="button"
+          role="tab"
+          aria-controls="nav-home"
+          aria-selected="true"
+        >
+          Created
+        </button>
+        <button
+          class="nav-link"
+          id="nav-profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#active"
+          type="button"
+          role="tab"
+          aria-controls="nav-profile"
+          aria-selected="false"
+        >
+          In progress
+        </button>
+        <button
+          class="nav-link"
+          id="nav-contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#finished"
+          type="button"
+          role="tab"
+          aria-controls="nav-contact"
+          aria-selected="false"
+        >
+          Finished
+        </button>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div class="tab-content">
+  <div
+    class="tab-pane fade show active"
+    id="created"
+    role="tabpanel"
+    aria-labelledby="nav-home-tab"
+  >
+    <div class="flex flex-wrap m-2 gap-3">
+      <div *ngFor="let p of createdPrograms" class="card-wrapper">
+        <div class="card-item">
+          <app-fitness-program-card
+            [program]="p"
+            [isCreated]="true"
+            [differentiateTabs]="'created'"
+            (notifyDeleted)="onDeleteFitnessProgram()"
+          ></app-fitness-program-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-content">
+  <div
+    class="tab-pane fade"
+    id="active"
+    role="tabpanel"
+    aria-labelledby="nav-profile-tab"
+  >
+    <div class="flex flex-wrap m-2 gap-3">
+      <div *ngFor="let p of activePrograms" class="card-wrapper">
+        <div class="card-item">
+          <app-fitness-program-card
+            [isCreated]="false"
+            [program]="p"
+            [differentiateTabs]="'active'"
+          ></app-fitness-program-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-content">
+  <div
+    class="tab-pane fade"
+    id="finished"
+    role="tabpanel"
+    aria-labelledby="nav-contact-tab"
+  >
+    <div class="flex flex-wrap m-2 gap-3">
+      <div *ngFor="let p of finishedPrograms" class="card-wrapper">
+        <div class="card-item">
+          <app-fitness-program-card
+            [program]="p"
+            [isCreated]="false"
+            [differentiateTabs]="'finished'"
+          ></app-fitness-program-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

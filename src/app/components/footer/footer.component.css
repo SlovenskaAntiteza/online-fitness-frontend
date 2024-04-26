@@ -1,0 +1,16 @@
+footer {
+  background: linear-gradient(
+    to right,
+    hsl(202, 65%, 68%),
+    hsl(233, 56%, 55%),
+    hsl(275, 94%, 72%)
+  );
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: larger;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}

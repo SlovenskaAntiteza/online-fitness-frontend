@@ -1,0 +1,128 @@
+<form [formGroup]="activityForm" (ngSubmit)="onSubmit()">
+  <p-dialog [(visible)]="isViewable" [closable]="false">
+    <ng-template pTemplate="headless">
+      <div
+        class="flex flex-column px-5 py-3 gap-4"
+        style="
+          border-radius: 12px;
+          background-image: radial-gradient(
+            circle at left top,
+            var(--primary-400),
+            var(--primary-700)
+          );
+        "
+      >
+        <div
+          class="flex justify-content-center text-primary-50 font-semibold fs-2"
+        >
+          Add activity
+        </div>
+
+        <!--Need to add intensity here-->
+
+        <div class="inline-flex gap-2">
+          <div class="inline-flex flex-column">
+            <label for="name" class="text-primary-50 font-semibold">Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="name"
+              id="name"
+              name="name"
+              class="bg-white-alpha-20 border-none p-3 text-primary-50"
+            />
+            <small
+              *ngIf="name.invalid && (name.dirty || name.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="name.errors?.['required']">Name is required</div>
+            </small>
+          </div>
+          <div class="inline-flex flex-column">
+            <label for="sets" class="text-primary-50 font-semibold">Sets</label>
+            <input
+              type="number"
+              pInputText
+              formControlName="sets"
+              id="sets"
+              name="sets"
+              class="bg-white-alpha-20 border-none p-3 text-primary-50"
+            />
+            <small
+              *ngIf="sets.invalid && (sets.dirty || sets.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="sets.errors?.['required']">Sets is required</div>
+            </small>
+          </div>
+        </div>
+
+        <div class="inline-flex gap-2">
+          <div class="inline-flex flex-column">
+            <label for="reps" class="text-primary-50 font-semibold">Reps</label>
+            <input
+              type="number"
+              pInputText
+              formControlName="reps"
+              id="reps"
+              name="reps"
+              class="bg-white-alpha-20 border-none p-3 text-primary-50"
+            />
+            <small
+              *ngIf="reps.invalid && (reps.dirty || reps.touched)"
+              class="block p-error"
+            >
+              <div *ngIf="reps.errors?.['required']">Reps is required</div>
+            </small>
+          </div>
+          <div class="inline-flex flex-column">
+            <label for="weight" class="text-primary-50 font-semibold"
+              >Weight</label
+            >
+            <input
+              type="number"
+              pInputText
+              formControlName="weight"
+              id="weight"
+              name="weight"
+              class="bg-white-alpha-20 border-none p-3 text-primary-50"
+            />
+          </div>
+        </div>
+
+        <div class="inline-flex gap-2">
+          <div class="inline-flex flex-column w-full">
+            <label for="intensity" class="text-primary-50 font-semibold"
+              >Intensity</label
+            >
+            <p-dropdown
+              [options]="intensities"
+              formControlName="intensity"
+              id="intensity"
+              optionLabel="label"
+              class="border-none"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="flex align-items-center gap-2">
+          <p-button
+            label="Add"
+            [text]="true"
+            type="ngSubmit"
+            styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
+            class="w-full"
+            [disabled]="activityForm.invalid"
+          ></p-button>
+          <p-button
+            label="Cancel"
+            [text]="true"
+            (onClick)="hideModalCancle()"
+            styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
+            class="w-full"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</form>

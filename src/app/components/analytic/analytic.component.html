@@ -1,0 +1,192 @@
+<div class="flex justify-content-center mt-3 text-teal-500 text-5xl font-bold">
+  Activities
+</div>
+
+<div class="flex justify-content-end mr-4 mb-3">
+  <button id="downloadBtn" (click)="downloadPdf()">
+    PDF <i class="pi pi-download" style="font-weight: 700"></i>
+  </button>
+</div>
+
+<div class="flex-column">
+  <div class="flex justify-content-center">
+    <div class="card" style="width: 90%; margin-bottom: 20px">
+      <p-table
+        #dt1
+        [value]="activities"
+        dataKey="id"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5, 10, 25]"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="[
+          'name',
+          'country.name',
+          'representative.name',
+          'status'
+        ]"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <button
+              pButton
+              label="Clear"
+              class="p-button-outlined"
+              icon="pi pi-filter-slash"
+              (click)="clear(dt1)"
+            ></button>
+
+            <span class="ml-auto">
+              <button
+                pButton
+                label="Add activity"
+                class="p-button-outlined"
+                icon="pi pi-plus"
+                (click)="addNewActivity()"
+              ></button>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">
+                Name
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">
+                Intensity
+                <p-columnFilter
+                  type="text"
+                  field="intensity"
+                  matchMode="equals"
+                  display="menu"
+                >
+                  <ng-template
+                    pTemplate="filter"
+                    let-value
+                    let-filter="filterCallback"
+                  >
+                    <p-dropdown
+                      [ngModel]="value"
+                      [options]="intensities"
+                      (onChange)="filter($event.value)"
+                      placeholder="Any"
+                    >
+                      <ng-template let-intensity pTemplate="item">
+                        <p-tag
+                          [value]="intensity.value"
+                          [severity]="getSeverity(intensity.label)"
+                        ></p-tag>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">Sets</div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">Reps</div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">Weight</div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">Date</div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex align-items-center">Action</div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-activitie>
+          <tr>
+            <td>{{ activitie.name }}</td>
+            <td>
+              <p-tag
+                [value]="activitie.intensity"
+                [severity]="getSeverity(activitie.intensity)"
+              ></p-tag>
+            </td>
+            <td>{{ activitie.sets }}</td>
+            <td>{{ activitie.reps }}</td>
+            <td>{{ activitie.weight }}</td>
+            <td>{{ activitie["date"] | date : "MM/dd/yyyy" }}</td>
+            <td>
+              <p-button
+                id="deleteBtn"
+                icon="pi pi-times"
+                severity="danger"
+                (onClick)="deleteActivity(activitie.id)"
+              ></p-button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" *ngIf="activities?.length === 0">
+          <tr>
+            <td colspan="7">No activities found!</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<app-add-activity
+  [isViewable]="showAddActivityDialog"
+  (modalClosed)="onModalClosed($event)"
+  [userId]="userId"
+></app-add-activity>
+
+<p-toast></p-toast>
+
+<div class="flex-column">
+  <div class="flex justify-content-center">
+    <div class="card flex justify-content-center">
+      <p-calendar
+        [(ngModel)]="startDate"
+        (onSelect)="loadBodyWeights()"
+        placeholder="Select start date"
+      ></p-calendar>
+    </div>
+    <div class="card flex justify-content-center">
+      <p-calendar
+        [(ngModel)]="endDate"
+        placeholder="Select end date"
+        (onSelect)="loadBodyWeights()"
+      ></p-calendar>
+    </div>
+    <div class="flex justify-content-center">
+      <input
+        type="number"
+        min="0"
+        [(ngModel)]="weightValue"
+        placeholder="Enter your weight"
+      />
+    </div>
+    <div class="flex justify-content-center">
+      <button
+        pButton
+        class="btn btn-primary"
+        [disabled]="!weightValue"
+        (click)="addNewBodyWeight()"
+      >
+        Add weight
+      </button>
+    </div>
+  </div>
+  <div class="flex justify-content-center">
+    <div class="card mt-5 mb-5" style="width: 90%">
+      <p-chart type="line" [data]="data" [options]="options"></p-chart>
+    </div>
+  </div>
+</div>

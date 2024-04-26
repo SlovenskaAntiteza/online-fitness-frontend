@@ -1,0 +1,48 @@
+:host ::ng-deep {
+  #navElem {
+    background: linear-gradient(
+      to right,
+      hsl(100, 60%, 60%),
+      hsl(100, 80%, 80%)
+    ) !important;
+  }
+}
+
+:host ::ng-deep .p-menubar {
+  background: linear-gradient(
+    to right,
+    hsl(202, 54%, 75%),
+    hsl(233, 54%, 76%),
+    hsl(275, 89%, 69%)
+  );
+}
+
+@media screen and (max-width: 960px) {
+  :host ::ng-deep {
+    .p-menubar-root-list {
+      width: 300px;
+      background: linear-gradient(
+        to right,
+        hsl(202, 65%, 68%),
+        hsl(233, 56%, 55%),
+        hsl(275, 94%, 72%)
+      );
+    }
+    ul {
+      padding: 0;
+    }
+
+    .p-menuitem-content {
+      background: linear-gradient(
+        to right,
+        hsl(202, 65%, 68%),
+        hsl(233, 56%, 55%),
+        hsl(275, 94%, 72%)
+      );
+    }
+  }
+}
+
+:host ::ng-deep .p-menuitem-content > a {
+  text-decoration: none;
+}

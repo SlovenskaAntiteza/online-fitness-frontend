@@ -1,0 +1,280 @@
+<div class="center-element">
+  <div class="content-element">
+    <div id="carouselExample" class="carousel slide">
+      <!-- (data-bs-ride="carousel") Can add this to automatically change image -->
+      <div class="carousel-indicators" *ngIf="program?.images">
+        <button
+          *ngFor="let img of program.images; let i = index"
+          type="button"
+          data-bs-target="#carouselExample"
+          [attr.data-bs-slide-to]="i"
+          [class.active]="i === 0"
+          [attr.aria-current]="i === 0 ? 'true' : 'false'"
+          aria-current="true"
+          aria-label="img.name"
+        ></button>
+      </div>
+      <div class="carousel-inner">
+        <div *ngIf="!program?.images || program?.images.length === 0">
+          <img
+            src="./assets/default.jpeg"
+            class="d-block w-100"
+            alt="Default Image"
+            height="200px"
+          />
+        </div>
+        <div *ngIf="program?.images && program?.images.length > 0"></div>
+        <div
+          class="carousel-item"
+          *ngFor="let img of program.images; let i = index"
+          [class.active]="i === 0"
+        >
+          <img
+            [src]="
+              'http://localhost:8080/api/images/get-program-image/' +
+              program.id +
+              '/' +
+              img.name
+            "
+            class="d-block w-100"
+            alt="..."
+          />
+        </div>
+      </div>
+      <ng-container *ngIf="program?.images && program?.images.length > 1">
+        <!-- Render carousel control buttons when program has images -->
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExample"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExample"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </ng-container>
+    </div>
+    <hr />
+    <div style="display: flex; margin-bottom: 20px">
+      <h3>{{ program.name }}</h3>
+      <div
+        class="category-card"
+        *ngFor="let c of program.fitnessProgramCategories"
+        style="font-weight: 500; font-size: 18px"
+      >
+        {{ c.category.name }}
+      </div>
+    </div>
+
+    <div class="mb-2" *ngIf="checkIsUserLogged()">
+      @if (!isParticipating) {
+      <button
+        style="margin: 0"
+        class="par-ask-button"
+        (click)="participateInProgram()"
+      >
+        Participate
+      </button>
+      } @else {
+      <button style="margin: 0" class="par-ask-button" (click)="askAdvisor()">
+        Ask advisor
+      </button>
+      }
+    </div>
+    <!-- Code about tabs-->
+
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button
+          class="nav-link active"
+          id="nav-home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-details"
+          type="button"
+          role="tab"
+          aria-controls="nav-details"
+          aria-selected="true"
+        >
+          Details
+        </button>
+        <button
+          class="nav-link"
+          id="nav-profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-comments"
+          type="button"
+          role="tab"
+          aria-controls="nav-comments"
+          aria-selected="false"
+        >
+          Comments
+        </button>
+        <button
+          class="nav-link"
+          id="nav-start-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-start"
+          type="button"
+          role="tab"
+          aria-controls="nav-comments"
+          aria-selected="false"
+        >
+          Start
+        </button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="nav-details"
+        role="tabpanel"
+        aria-labelledby="nav-home-tab"
+        tabindex="0"
+      >
+        <div class="mt-2">
+          <div class="grid nested-grid">
+            <div class="col-6">
+              <div class="grid">
+                <div class="col-6">
+                  <div class="p-1 border-round-sm font-bold">
+                    Program details
+                    <hr style="margin: 0" />
+                  </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-6">
+                  <p>
+                    Duration -
+                    <small>{{ program?.duration | number }} days</small>
+                  </p>
+                </div>
+                <div class="col-6">
+                  <p>
+                    Price - <small>{{ program?.price | currency }}</small>
+                  </p>
+                </div>
+                <div class="col-6">
+                  <p>
+                    Difficulty -
+                    <small>{{ program?.difficultyLevel }}</small>
+                  </p>
+                </div>
+                <div class="col-6">
+                  <p>
+                    Category - <small>{{ program?.category?.name }}</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="grid">
+                <div class="col-6">
+                  <div class="p-1 border-round-sm font-bold">
+                    Intructor details
+                    <hr style="margin: 0" />
+                  </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-12">
+                  <p>
+                    Instructor name -
+                    <small>{{ program?.instructorName }}</small>
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p>
+                    Instructor contact -
+                    <small>{{ program?.instructorContact }}</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 font-bold">
+              Description
+              <hr style="margin: 0" />
+            </div>
+            <div class="col-9"></div>
+            <div class="col-12">{{ program?.description }}</div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="nav-comments"
+        role="tabpanel"
+        aria-labelledby="nav-profile-tab"
+        tabindex="0"
+      >
+        <div class="comment-entry-box" *ngIf="checkIsUserLogged()">
+          <textarea
+            [(ngModel)]="newComment"
+            placeholder="Enter your comment"
+          ></textarea>
+          <div class="button-group">
+            <button class="submit-button" (click)="submitComment()">
+              Send
+            </button>
+            <button class="cancel-button" (click)="clearComment()">
+              Clear
+            </button>
+          </div>
+        </div>
+        <div *ngFor="let comm of program.fitnessProgramComments">
+          <app-comment [comment]="comm"></app-comment>
+        </div>
+      </div>
+
+      <div
+        class="tab-pane fade show-active"
+        id="nav-start"
+        role="tabpanel"
+        aria-labelledby="nav-start-tab"
+        tabindex="0"
+      >
+        <div>
+          @if (program?.location === 'gym' || program?.location === 'park') {
+          <div class="m-2 font-bold border-round-sm">
+            See you at location({{ program?.location }}):
+            {{ program?.linkAddress }}
+          </div>
+          }@else if (program?.location === 'online'){
+          <div class="m-2 font-bold">Watch youtube video:</div>
+          <div class="m-2">
+            <iframe
+              height="400"
+              [src]="safeUrl"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Modal for sending meessage to advisor-->
+  <app-ask-advisor
+    [isViewable]="showAskAdvisorModal"
+    [programId]="program.id"
+    (modalClosed)="onAskAdvisorCloseModal($event)"
+  ></app-ask-advisor>
+  <p-toast></p-toast>
+
+  <!--Modal for participating fitness program-->
+  <app-participate
+    [isViewable]="showParticipateModal"
+    (modalClosed)="onParticipateCloseModal($event)"
+    [program]="program"
+  ></app-participate>
+</div>

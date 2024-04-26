@@ -1,0 +1,248 @@
+<div class="flex-column">
+  <div class="flex justify-content-center align-items-center">
+    <div class="card">
+      <div
+        class="flex justify-content-center align-items-center m-3"
+        style="font-size: 25px; font-weight: 600"
+      >
+        CREATE FITNESS PROGRAM
+      </div>
+      <mat-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="fitProgramForm">
+          <form [formGroup]="fitProgramForm">
+            <ng-template matStepLabel>Step 1</ng-template>
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label for="name">Name</label></div>
+                <div>
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="name"
+                    name="name"
+                    id="name"
+                    placeholder="Enter name"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div><label for="duration">Duration</label></div>
+                <div>
+                  <input
+                    type="number"
+                    pInputText
+                    formControlName="duration"
+                    name="duration"
+                    id="duration"
+                    placeholder="Duration"
+                    min="0"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label for="difficulty">Difficulty</label></div>
+                <div>
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="difficulty"
+                    name="difficulty"
+                    id="difficulty"
+                    placeholder="Enter difficulty level"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div><label for="price">Price</label></div>
+                <div>
+                  <input
+                    type="number"
+                    pInputText
+                    formControlName="price"
+                    name="price"
+                    id="price"
+                    placeholder="Enter price"
+                    min="0"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label for="description">Description</label></div>
+                <div>
+                  <textarea
+                    type="text"
+                    pInputText
+                    formControlName="description"
+                    name="description"
+                    id="description"
+                    placeholder="Enter description"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="fitProgramForm" label="Step 2">
+          <form [formGroup]="fitProgramForm">
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label>Location</label></div>
+                <div>
+                  <p-dropdown
+                    [options]="locations"
+                    formControlName="location"
+                    id="location"
+                    name="location"
+                    [style]="{ width: '100%' }"
+                    placeholder="Select location"
+                    appendTo="body"
+                    (onChange)="onLocationChange($event)"
+                  >
+                  </p-dropdown>
+                </div>
+              </div>
+            </div>
+            @if (location.value == 'ONLINE'){
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label for="youtubeLink">Youtube link</label></div>
+                <div>
+                  <input
+                    type="text"
+                    pInputText
+                    name="youtubeLink"
+                    id="youtubeLink"
+                    formControlName="youtubeLink"
+                    placeholder="Enter youtube link"
+                  />
+                </div>
+              </div>
+            </div>
+            } @else if (location.value == 'GYM' || location.value == 'PARK'){
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label for="address">Address</label></div>
+                <div>
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="address"
+                    name="address"
+                    id="address"
+                    placeholder="Enter address"
+                  />
+                </div>
+              </div>
+            </div>
+            }
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label for="instructorName">Instructor Name</label></div>
+                <div>
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="instructorName"
+                    name="instructorName"
+                    id="instructorName"
+                    placeholder="Enter instructor name"
+                    style="width: 100%"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <div>
+                  <label for="instructorContact">Instructor contact</label>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="instructorContact"
+                    name="instructorContact"
+                    id="instructorContact"
+                    placeholder="Enter instructor contact"
+                    style="width: 100%"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="fitProgramForm" label="Step 3">
+          <form [formGroup]="fitProgramForm">
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div><label>Category</label></div>
+                <div>
+                  <p-dropdown
+                    [options]="categoriesOptions"
+                    formControlName="category"
+                    id="category"
+                    name="category"
+                    [style]="{ width: '100%' }"
+                    placeholder="Select cateogry"
+                    appendTo="body"
+                    (onChange)="onCategoryChange($event)"
+                  >
+                  </p-dropdown>
+                </div>
+              </div>
+            </div>
+            @for(attr of collectionAttributes; track $index){
+            <div class="flex justify-content-between flex-wrap">
+              <div class="field">
+                <div>
+                  <label for="id-{{ $index }}">{{ attr.name }}</label>
+                  <input
+                    id="id-{{ $index }}"
+                    name="id-{{ $index }}"
+                    type="text"
+                    class="form-control"
+                    [formControl]="$any(attributes.controls[0].get(attr.name))"
+                    placeholder="Enter value"
+                  />
+                </div>
+                <div></div>
+              </div>
+            </div>
+            }
+            <p-toast></p-toast>
+            <div class="file-content">
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                (change)="onFileSelected($event)"
+              />
+            </div>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+              <button
+                mat-button
+                (click)="submitData()"
+                [disabled]="fitProgramForm.invalid"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.flex-container {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.flex-container input {
+  margin-right: 20px;
+}
+
+.field label {
+  min-width: 200px;
+}

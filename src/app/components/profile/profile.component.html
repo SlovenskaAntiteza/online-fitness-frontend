@@ -1,0 +1,140 @@
+<div class="flex-column">
+  <div class="flex justify-content-center"><h2>My profile</h2></div>
+
+  <div class="flex justify-content-center">
+    <div class="user-details">
+      <div class="flex-column">
+        <div class="flex">
+          <img
+            *ngIf="user.avatarUrl"
+            class="user-icon"
+            [src]="
+              'http://localhost:8080/api/images/get-avatar?name=' +
+              user.avatarUrl
+            "
+            alt="..."
+          />
+          <img
+            *ngIf="user.avatarUrl == ''"
+            class="user-icon"
+            src="assets/avatar.png"
+            alt="..."
+          />
+          <div class="flex-column ml-3" *ngIf="user">
+            <div style="font-size: 20px">
+              {{ user.firstName }} {{ user.lastName }}
+            </div>
+            <small>{{ user.username }}</small>
+          </div>
+        </div>
+
+        <hr />
+        <div class="form-container">
+          <form [formGroup]="updateForm" (ngSubmit)="submitData()">
+            <!-- background color need change-->
+            <p-card
+              header="User details"
+              [style]="{
+                width: '100%'
+              }"
+            >
+              <div class="flex justify-content-between flex-wrap">
+                <div class="field">
+                  <div><label for="firstName">First Name</label></div>
+                  <div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="firstName"
+                      name="firstName"
+                      id="firstName"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <div><label for="lastName">Last Name</label></div>
+                  <div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="lastName"
+                      name="lastName"
+                      id="lastName"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-content-between flex-wrap">
+                <div class="field">
+                  <div><label for="mail">Email</label></div>
+                  <div>
+                    <input
+                      type="text"
+                      pInputText
+                      name="mail"
+                      id="mail"
+                      formControlName="mail"
+                      [readOnly]="true"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <div><label for="city">City</label></div>
+                  <div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="city"
+                      name="city"
+                      id="city"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex-column">
+                <div class="field">
+                  <div><label for="avatarUrl">Avatar</label></div>
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/png, image/jpeg, image/jpg"
+                      (change)="onFileChange($event)"
+                      pInputText
+                      formControlName="avatarUrl"
+                      name="avatarUrl"
+                      id="avatarUrl"
+                      placeholder="Enter avatar"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-content-between">
+                <div>
+                  <button id="btnChPass" (click)="changePassword()">
+                    Change password <i class="pi pi-lock"></i>
+                  </button>
+                </div>
+                <div>
+                  <p-button
+                    label="UPDATE"
+                    type="ngSubmit"
+                    styleClass="margin: 5px"
+                    [disabled]="!shouldEnableButton()"
+                  ></p-button>
+                </div>
+              </div>
+            </p-card>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-change-password
+  [isViewable]="showChangePasswordModule"
+  (modalClosed)="onCloseModal($event)"
+></app-change-password>
+
+<p-toast></p-toast>

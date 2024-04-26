@@ -1,0 +1,50 @@
+<h2>Feeds</h2>
+<div
+  *ngFor="let item of rssItems"
+  style="display: flex; justify-content: center; margin: 10px"
+>
+  <div class="p-card" style="width: 75%">
+    <div
+      class="p-card-header"
+      style="
+        background-color: #1e90ff;
+        color: white;
+        line-height: 50px;
+        padding-left: 5px;
+        border-radius: 5px;
+      "
+    >
+      {{ item.title }}
+    </div>
+    <div class="p-card-body" style="padding-left: 5px">
+      Description:
+      <p>{{ item.description }}</p>
+    </div>
+    <div class="p-card-footer">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-left: 5px;
+          margin-right: 5px;
+          margin-bottom: 5px;
+        "
+      >
+        <p-button
+          label="Read more"
+          (onClick)="redirectToLink(item.link)"
+        ></p-button>
+        <span
+          style="
+            background-color: rgb(219, 84, 61);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+          "
+          >{{ item.category }}</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="flex justify-content-center align-items-center h-full">
+  <div class="flex-column justify-content-center">
+    <div>
+      <h2 *ngIf="activated" style="color: green">
+        Your account has been successfully activated!
+      </h2>
+
+      <h2 *ngIf="!activated" style="color: red">
+        Your account hasn't been activated!
+      </h2>
+    </div>
+    <div class="flex justify-content-center">
+      <button
+        style="
+          border: 0;
+          background-color: blue;
+          color: white;
+          font-size: 25px;
+          border-radius: 5px;
+        "
+        routerLink="/login"
+      >
+        Login
+      </button>
+    </div>
+  </div>
+</div>

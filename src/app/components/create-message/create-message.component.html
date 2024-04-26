@@ -1,0 +1,79 @@
+<form [formGroup]="messageForm" (ngSubmit)="onSumbit()">
+  <p-dialog
+    [(visible)]="isViewable"
+    [closable]="false"
+    [style]="{ width: '60vw' }"
+  >
+    <ng-template pTemplate="headless">
+      <div
+        class="flex flex-column px-8 py-5 gap-4"
+        style="
+          border-radius: 8px;
+          background-image: radial-gradient(
+            circle at left top,
+            var(--primary-400),
+            var(--primary-700)
+          );
+        "
+      >
+        <div
+          class="flex justify-content-center text-primary-50 font-semibold fs-2"
+        >
+          Send message
+        </div>
+
+        <span class="p-fluid">
+          <p-autoComplete
+            formControlName="user"
+            [suggestions]="filteredUsers"
+            [dropdown]="true"
+            placeholder="Choose user"
+            (completeMethod)="filterUsers($event)"
+            (onSelect)="onUserSelect($event)"
+          >
+            <ng-template let-user pTemplate="item">
+              {{ user.firstName }} {{ user.lastName }}
+            </ng-template>
+          </p-autoComplete>
+        </span>
+
+        <div class="inline-flex flex-column gap-2">
+          <label for="message" class="text-primary-50 font-semibold"
+            >Message</label
+          >
+          <textarea
+            type="text"
+            pInputText
+            formControlName="message"
+            id="message"
+            name="message"
+          ></textarea>
+          <small
+            *ngIf="message.invalid && (message.dirty || message.touched)"
+            class="block p-error"
+          >
+            <div *ngIf="message.errors?.['required']">Message is required</div>
+          </small>
+        </div>
+
+        <div class="flex align-items-center gap-2">
+          <p-button
+            label="Submit"
+            [text]="true"
+            type="ngSubmit"
+            styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
+            class="w-full"
+            [disabled]="messageForm.invalid"
+          ></p-button>
+          <p-button
+            label="Cancel"
+            [text]="true"
+            (onClick)="hideModalCancel()"
+            styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
+            class="w-full"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</form>

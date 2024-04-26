@@ -1,0 +1,7 @@
+h2 {
+  text-align: center;
+}
+
+:host ::ng-deep .p-button {
+  border-radius: 5px;
+}

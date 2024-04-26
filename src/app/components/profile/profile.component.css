@@ -1,0 +1,48 @@
+.user-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 1px;
+}
+
+.user-icon img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.user-details {
+  width: 75%;
+  border: 1px solid hsl(0, 2%, 78%);
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.field {
+  flex-grow: 1;
+  margin: 5px;
+}
+
+.field input {
+  width: 100%;
+}
+
+:host ::ng-deep .p-button {
+  margin: 5px;
+  border-radius: 5px;
+}
+
+#btnChPass {
+  background-color: #fb3d13;
+  border: 0;
+  color: white;
+  font-size: 18px;
+  height: auto;
+  line-height: auto;
+  align-items: center;
+  border-radius: 5px;
+  margin: 5px;
+}

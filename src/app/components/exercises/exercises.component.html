@@ -1,0 +1,51 @@
+<h2 style="text-align: center">Exercises</h2>
+
+<div>
+  <div class="flex justify-content-center align-items-center mb-3">
+    <p-dropdown
+      [options]="muscles"
+      [(ngModel)]="muscle"
+      (onChange)="onChange()"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Select a Muscle"
+    ></p-dropdown>
+
+    <p-dropdown
+      class="ml-2"
+      [options]="levels"
+      [(ngModel)]="level"
+      (onChange)="onChange()"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Select a Level"
+    ></p-dropdown>
+  </div>
+</div>
+<p-accordion>
+  <div
+    style="display: flex; justify-content: center"
+    *ngFor="let e of exerices"
+  >
+    <p-accordionTab [style]="{ width: '75%' }">
+      <ng-template pTemplate="header">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+          "
+        >
+          <span>{{ e.name }}</span>
+          <p-badge value="{{ e.difficulty }}" />
+        </div>
+      </ng-template>
+      <p class="m-0">
+        <strong>Description:</strong> <br />
+        <br />
+        {{ e.instructions }}
+      </p>
+    </p-accordionTab>
+  </div>
+</p-accordion>

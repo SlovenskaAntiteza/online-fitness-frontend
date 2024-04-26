@@ -1,0 +1,107 @@
+<form [formGroup]="participateForm" (ngSubmit)="onSubmit()">
+  <p-dialog
+    [(visible)]="isViewable"
+    [closable]="false"
+    [style]="{ width: '60vw' }"
+  >
+    <ng-template pTemplate="headless">
+      <div
+        class="flex flex-column px-8 py-5 gap-4"
+        style="
+          border-radius: 8px;
+          background-image: radial-gradient(
+            circle at left top,
+            var(--primary-400),
+            var(--primary-700)
+          );
+        "
+      >
+        <div class="flex justify-content-center text-primary-50 font-semibold">
+          <h2>Participate in program {{ program.name }}</h2>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            formControlName="paymentMethod"
+            value="paypal"
+            (change)="togglePaymentMethod($event)"
+          />
+          <label class="form-check-label text-primary-50 font-semibold"
+            >Paypal</label
+          >
+        </div>
+        <div *ngIf="participateForm.get('paymentMethod')?.value === 'paypal'">
+          <div class="form-group">
+            <label for="paypalEmail" class="text-primary-50 font-semibold"
+              >Enter your PayPal email:</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="paypalEmail"
+              formControlName="paypalEmail"
+            />
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            formControlName="paymentMethod"
+            value="visa"
+            (change)="togglePaymentMethod($event)"
+          />
+          <label class="form-check-label text-primary-50 font-semibold"
+            >Visa card</label
+          >
+        </div>
+        <div *ngIf="participateForm.get('paymentMethod')?.value === 'visa'">
+          <div class="form-group">
+            <label for="visaCardNumber" class="text-primary-50 font-semibold"
+              >Enter your Visa card number:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="visaCardNumber"
+              formControlName="visaCardNumber"
+            />
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            formControlName="paymentMethod"
+            value="location"
+            (change)="togglePaymentMethod($event)"
+          />
+          <label class="form-check-label text-primary-50 font-semibold"
+            >Location</label
+          >
+        </div>
+
+        <div class="flex align-items-center gap-2">
+          <p-button
+            label="Submit"
+            [text]="true"
+            type="ngSubmit"
+            styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
+            class="w-full"
+            [disabled]="participateForm.invalid"
+          ></p-button>
+          <p-button
+            label="Cancel"
+            [text]="true"
+            (onClick)="hideModalCancle()"
+            styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"
+            class="w-full"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</form>

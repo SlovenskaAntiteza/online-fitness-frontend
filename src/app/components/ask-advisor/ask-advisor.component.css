@@ -1,0 +1,10 @@
+.content {
+  border: none;
+  border-radius: 8px;
+  height: 400px;
+  background-image: radial-gradient(
+    circle at left top,
+    var(--primary-400),
+    var(--primary-700)
+  );
+}

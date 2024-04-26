@@ -1,0 +1,17 @@
+:host ::ng-deep {
+  #deleteBtn {
+    .p-button {
+      border-radius: 50%;
+    }
+  }
+}
+
+#downloadBtn {
+  border-radius: 5px;
+  background: linear-gradient(to right, hsl(200, 60%, 50%), hsl(230, 80%, 80%));
+  border: 0;
+  line-height: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  box-shadow: 1px 2px 2px 2px;
+}

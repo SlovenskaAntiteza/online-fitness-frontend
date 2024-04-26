@@ -1,0 +1,51 @@
+<div class="flex justify-content-center align-items-center h-full">
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+    <p-card header="Log in" [style]="{ width: '360px' }">
+      <div class="field">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="username"
+          class="w-full"
+          name="username"
+          id="username"
+          placeholder="Type your username"
+        />
+        <small
+          *ngIf="username.invalid && (username.dirty || username.touched)"
+          class="block p-error"
+        >
+          <div *ngIf="username.errors?.['required']">Username is required</div>
+        </small>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          pInputText
+          formControlName="password"
+          class="w-full"
+          id="password"
+          name="password"
+          placeholder="Type your password"
+        />
+        <small
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+          class="block p-error"
+        >
+          <div *ngIf="password.errors?.['required']">Password is required</div>
+        </small>
+      </div>
+      <p-button
+        label="LOG IN"
+        styleClass="w-full"
+        [disabled]="loginForm.invalid"
+        type="ngSubmit"
+      ></p-button>
+      <div class="mt-2">
+        Not a memeber? <a routerLink="/register">Register</a>
+      </div>
+    </p-card>
+  </form>
+</div>

@@ -1,0 +1,145 @@
+<div style="display: flex; justify-content: center; align-items: center">
+  <h2>Fitness programs</h2>
+</div>
+
+<div class="filter-div">
+  <div class="filter-content">
+    <p-dropdown
+      [options]="categories"
+      [(ngModel)]="selectedCategory"
+      [showClear]="true"
+      placeholder="Select Category"
+    ></p-dropdown>
+
+    <p-dropdown
+      [style]="{ 'margin-left': '20px' }"
+      [options]="levels"
+      [(ngModel)]="selectedLevel"
+      [showClear]="true"
+      placeholder="Select Level"
+    ></p-dropdown>
+
+    <p-dropdown
+      [style]="{ 'margin-left': '20px' }"
+      [options]="locations"
+      [(ngModel)]="selectedLocation"
+      [showClear]="true"
+      placeholder="Select Location"
+    ></p-dropdown>
+
+    <button
+      style="margin-left: 20px; margin-right: 10px"
+      type="button"
+      class="btn btn-outline-info"
+      (click)="filterPrograms()"
+    >
+      Filter
+    </button>
+  </div>
+</div>
+
+<div class="flex flex-wrap m-2 gap-3" *ngIf="programs.content">
+  <div *ngFor="let p of programs.content" class="card-wrapper">
+    <div class="card-item">
+      <div [id]="'carousel' + p.id" class="carousel slide carousel-fade">
+        <div class="carousel-indicators">
+          <button
+            *ngFor="let img of p.images; let i = index"
+            type="button"
+            [attr.data-bs-target]="'#carousel' + p.id"
+            [attr.data-bs-slide-to]="i"
+            [class.active]="i === 0"
+            [attr.aria-current]="i === 0 ? 'true' : 'false'"
+            aria-current="true"
+            aria-label="img.name"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <ng-container
+            *ngIf="p.images && p.images.length > 0; else defaultImage"
+          >
+            <div
+              *ngFor="let img of p.images; let i = index"
+              class="carousel-item"
+              [class.active]="i === 0"
+            >
+              <img
+                [src]="
+                  'http://localhost:8080/api/images/get-program-image/' +
+                  p.id +
+                  '/' +
+                  img.name
+                "
+                class="d-block w-100"
+                style="height: 200px"
+              />
+            </div>
+            <ng-container *ngIf="p.images && p.images.length > 1">
+              <button
+                class="carousel-control-prev"
+                type="button"
+                [attr.data-bs-target]="'#carousel' + p.id"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                [attr.data-bs-target]="'#carousel' + p.id"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </ng-container>
+          </ng-container>
+          <ng-template #defaultImage>
+            <div class="carousel-item active">
+              <!-- Default Image -->
+              <img
+                src="./assets/default.jpeg"
+                class="d-block w-100"
+                alt="Default Image"
+                height="200px"
+              />
+            </div>
+          </ng-template>
+        </div>
+        <div style="padding: 5px">
+          <div class="card-body">
+            <h5 class="card-title">{{ p.name }}</h5>
+            <p class="card-text">Price: {{ p.price | currency }}</p>
+            <a [routerLink]="['/program-details', p.id]" class="btn btn-primary"
+              >View more</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  style="
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    padding-bottom: 20px;
+  "
+>
+  <p-paginator
+    [totalRecords]="numOfRecords"
+    [rows]="pageSize"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    (onPageChange)="onPageChange($event)"
+  >
+  </p-paginator>
+</div>
